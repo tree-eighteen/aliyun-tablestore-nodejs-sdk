@@ -1,5 +1,5 @@
 {
-  "name": "tablestore",
+  "name": "aliyun-tablestore-nodejs-sdk",
   "main": "index.js",
   "description": "TableStore SDK for JavaScript",
   "version": "5.5.1",
