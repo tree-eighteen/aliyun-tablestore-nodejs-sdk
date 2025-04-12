@@ -13,6 +13,8 @@
  
 
 ## 版本特性
+- 版本：5.5.2
+  - TableStore.util.nodeRequire('domain') 改 require('domain')
 - 版本: 5.5.1
   - Bug fix in _parseSearchHit function.
 - 版本: 5.5.0
