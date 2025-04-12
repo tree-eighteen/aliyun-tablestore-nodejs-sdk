@@ -2,7 +2,7 @@
   "name": "aliyun-tablestore-nodejs-sdk",
   "main": "index.js",
   "description": "TableStore SDK for JavaScript",
-  "version": "5.5.4",
+  "version": "5.5.5",
   "devDependencies": {
     "mocha": "^3.2.0",
     "coveralls": "^2.13.1",
@@ -36,8 +36,5 @@
   },
   "author": "boxiao.wpl",
   "license": "Apache-2.0",
-  "types": "aliyun-tablestore-nodejs-sdk.d.ts",
-  "files": [
-    "aliyun-tablestore-nodejs-sdk.d.ts"
-  ]
+  "types": "aliyun-tablestore-nodejs-sdk.d.ts"
 }
