@@ -407,6 +407,53 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     transactionId: string
   }
 
+  export interface SearchResult {
+    totalCounts: string
+    isAllSucceeded: boolean
+    nextToken: Buffer
+    rows: Array<{
+      primaryKey: Array<{
+        name: string
+        value: number
+      }>
+      attributes: Array<{
+        columnName: string
+        columnValue: string | number
+        timestamp: number
+      }>
+    }>
+    searchHits: Array<{
+      row: {
+        primaryKey: Array<{
+          name: string
+          value: number
+        }>
+        attributes: Array<{
+          columnName: string
+          columnValue: string | number
+          timestamp: number
+        }>
+      }
+      highlightResultItem: {
+        highlightFields: Record<string, any>
+      }
+      searchInnerHits: Record<string, any>
+    }>
+    consumed: {
+      capacityUnit: {
+        read: number
+        write: number
+      }
+    }
+    reservedConsumed: {
+      capacityUnit: {
+        read: number
+        write: number
+      }
+    }
+    RequestId: string
+  }
+
   // ---------- filter ----------
   export const LogicalOperator: {
     NOT: 1
@@ -564,8 +611,8 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     ): Promise<unknown>
     search(
       params: SearchParams,
-      callback?: (error: Error | null, result: unknown) => void
-    ): Promise<unknown>
+      callback?: (error: Error | null, result: SearchResult) => void
+    ): Promise<SearchResult>
     createIndex(
       params: CreateIndexParams,
       callback?: (error: Error | null, result: unknown) => void
