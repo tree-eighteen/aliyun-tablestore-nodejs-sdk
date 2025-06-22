@@ -31,9 +31,6 @@
     "tablestore",
     "ots"
   ],
-  "browser": {
-    "./lib/util.js": "./lib/util-browser.js"
-  },
   "author": "boxiao.wpl",
   "license": "Apache-2.0",
   "types": "aliyun-tablestore-nodejs-sdk.d.ts"
