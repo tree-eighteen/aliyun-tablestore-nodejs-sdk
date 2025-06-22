@@ -5,7 +5,7 @@ const TableStore = require("../index");
 const Long = TableStore.Long;
 
 
-describe('Search Meta', () => {
+describe('搜索元数据', () => {
     it("create_and_describe_with_ttl_and_reindex_and_update_ttl", async function () {
         this.timeout(30000);
         const tableName = "js_create_and_describe"
@@ -60,7 +60,7 @@ describe('Search Meta', () => {
 });
 
 
-describe('Search Query', () => {
+describe('搜索查询', () => {
     it("agg_and_group_by", async function () {
         this.timeout(160000);
         const tableName = "js_agg_and_group_by"
@@ -1083,7 +1083,7 @@ describe('Search Query', () => {
     });
 });
 
-describe('ParallelScan', () => {
+describe('并行扫描', () => {
     it("compute_splits", async function () {
         this.timeout(30000);
         const tableName = "js_compute_splits"

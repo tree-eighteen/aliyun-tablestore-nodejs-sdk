@@ -236,7 +236,7 @@ client.search({
                     fieldSort: {
                         fieldName: "count",
                         order: TableStore.SortOrder.SORT_ORDER_DESC,
-                        // mode: TableStore.SortMode.SORT_MODE_AVG,//for nested
+                        // mode: TableStore.SortMode.SORT_MODE_AVG,//用于嵌套
                         // nestedFilter: {
                         //     path: "pic_tag",
                         //     filter: {
@@ -274,7 +274,7 @@ client.search({
         returnNames: ["pic_tag", "pic_description", "time_stamp", "pos"]
     },
     routingValues: [
-        [{count: Long.fromNumber(0), pic_id: "pic_id_0"}],//pk顺序与创建index时routingFields一致
+        [{count: Long.fromNumber(0), pic_id: "pic_id_0"}],//主键顺序与创建索引时routingFields一致
         [{count: Long.fromNumber(3), pic_id: "pic_id_3"}],
     ],
     timeoutMs: 300000,
