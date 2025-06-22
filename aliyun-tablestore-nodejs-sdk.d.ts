@@ -1,112 +1,111 @@
-declare module 'aliyun-tablestore-nodejs-sdk' {
-  /// <reference types="node" />
+/// <reference types="node" />
 
+declare namespace TableStore {
   // helper
   type EnumValues<T> = T[keyof T]
   type EnumValuesOrKeys<T> = T[keyof T] | keyof T
-  export {}
 
   // ---------- metadata ----------
-  export const Direction: {
+  const Direction: {
     FORWARD: 'FORWARD'
     BACKWARD: 'BACKWARD'
   }
 
-  export const UpdateType: {
+  const UpdateType: {
     PUT: 'PUT'
     DELETE: 'DELETE'
     DELETE_ALL: 'DELETE_ALL'
     INCREMENT: 'INCREMENT'
   }
 
-  export const BatchWriteType: {
+  const BatchWriteType: {
     PUT: 1
     UPDATE: 2
     DELETE: 3
   }
 
-  export const ReturnType: {
+  const ReturnType: {
     NONE: 0
     Primarykey: 1
     AfterModify: 2
   }
 
-  export const DefinedColumnType: {
+  const DefinedColumnType: {
     DCT_INTEGER: 1
     DCT_DOUBLE: 2
     DCT_BOOLEAN: 3
     DCT_STRING: 4
   }
 
-  export const PrimaryKeyType: {
+  const PrimaryKeyType: {
     INTEGER: 1
     STRING: 2
     BINARY: 3
   }
 
-  export const PrimaryKeyOption: {
+  const PrimaryKeyOption: {
     AUTO_INCREMENT: 1
   }
 
-  export const IndexUpdateMode: {
+  const IndexUpdateMode: {
     IUM_ASYNC_INDEX: 0
     IUM_SYNC_INDEX: 1
   }
 
-  export const IndexType: {
+  const IndexType: {
     IT_GLOBAL_INDEX: 0
     IT_LOCAL_INDEX: 1
   }
 
-  export const INF_MIN: unique symbol
-  export const INF_MAX: unique symbol
-  export const PK_AUTO_INCR: unique symbol
-  export type VirtualData = typeof INF_MIN | typeof INF_MAX | typeof PK_AUTO_INCR
+  const INF_MIN: unique symbol
+  const INF_MAX: unique symbol
+  const PK_AUTO_INCR: unique symbol
+  type VirtualData = typeof INF_MIN | typeof INF_MAX | typeof PK_AUTO_INCR
 
   // ---------- long ----------
-  export interface int64 {
+  interface int64 {
     toBuffer: () => Buffer
     toNumber: () => number
   }
-  export const Long: {
+  const Long: {
     fromNumber: (num: number) => int64
     fromString: (str: string) => int64
   }
 
   // ---------- protocol ----------
-  export type CellValue = string | Buffer | int64 | boolean | number | null
+  type CellValue = string | Buffer | int64 | boolean | number | null
 
-  export type PrimaryKeyInput = Array<{ [name: string]: CellValue | VirtualData }>
-  export type PrimaryKeyOutput = Array<{ name: string; value: CellValue }>
-  export type AttributesInput = Array<{
+  type PrimaryKeyInput = Array<{ [name: string]: CellValue | VirtualData }>
+  type PrimaryKeyOutput = Array<{ name: string; value: CellValue }>
+  type AttributesInput = Array<{
     [name: string]: CellValue | undefined
     timestamp?: number
   }>
-  export type AttributesOutput = Array<{
+  type AttributesOutput = Array<{
     columnName: string
     columnValue: CellValue
     timestamp: int64 | number
   }>
 
-  export interface Row {
+  interface Row {
     primaryKey: PrimaryKeyOutput | null
     attributes: AttributesOutput | null
   }
 
-  export interface RowInBatch extends Row, Consumed {
+  interface RowInBatch extends Row, Consumed {
     isOk: boolean
     errorCode: string | null
     errorMessage: string | null
     tableName: string
   }
 
-  export type TimeRange = Partial<{
+  type TimeRange = Partial<{
     startTime: number
     endTime: number
     specificTime: number
   }>
 
-  export type FilterParams = Partial<{
+  type FilterParams = Partial<{
     columnsToGet: string[]
     columnFilter: ColumnCondition
     timeRange: TimeRange
@@ -115,12 +114,12 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     endColumn: string
   }>
 
-  export type RowParamsInBatchGet = FilterParams & {
+  type RowParamsInBatchGet = FilterParams & {
     tableName: string
     primaryKey: PrimaryKeyInput[]
   }
 
-  export interface TableMeta {
+  interface TableMeta {
     tableName: string
     primaryKey: Array<{
       name: string
@@ -133,25 +132,25 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     }>
   }
 
-  export interface TableOptions {
+  interface TableOptions {
     timeToLive: number
     maxVersions: number
     maxTimeDeviation?: number
   }
 
-  export interface ReservedThroughput {
+  interface ReservedThroughput {
     capacityUnit: {
       read: number
       write: number
     }
   }
 
-  export interface StreamSpecification {
+  interface StreamSpecification {
     enableStream: boolean
     expirationTime?: number
   }
 
-  export interface IndexMeta {
+  interface IndexMeta {
     name: string
     primaryKey: string[]
     definedColumn: string[]
@@ -159,16 +158,16 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     indexType?: EnumValues<typeof IndexType>
   }
 
-  export interface ReturnContent {
+  interface ReturnContent {
     returnType: EnumValues<typeof ReturnType>
     returnColumns?: string[]
   }
 
-  export interface JustTableName {
+  interface JustTableName {
     tableName: string
   }
 
-  export interface FieldSchemas {
+  interface FieldSchemas {
     fieldName: string
     fieldType: EnumValues<typeof FieldType>
     index?: boolean
@@ -180,7 +179,7 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     dateFormats?: string
   }
 
-  export interface Sorter {
+  interface Sorter {
     primaryKeySort?: {
       order: EnumValues<typeof SortOrder>
     }
@@ -199,12 +198,12 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     }
   }
 
-  export type WithTransactionId = Partial<{
+  type WithTransactionId = Partial<{
     transactionId: string
   }>
 
   // ---------- protocol: pramas ----------
-  export interface CreateTableParams {
+  interface CreateTableParams {
     tableMeta: TableMeta
     tableOptions: TableOptions
     reservedThroughput: ReservedThroughput
@@ -212,30 +211,30 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     indexMetas?: IndexMeta[]
   }
 
-  export interface UpdateTableParams {
+  interface UpdateTableParams {
     tableName: string
     tableOptions: Partial<TableOptions>
     reservedThroughput?: ReservedThroughput
     streamSpecification?: StreamSpecification
   }
 
-  export type DescribeTableParams = JustTableName
+  type DescribeTableParams = JustTableName
 
-  export type DeleteTableParams = JustTableName
+  type DeleteTableParams = JustTableName
 
-  export type GetRowParams = FilterParams &
+  type GetRowParams = FilterParams &
     WithTransactionId & {
       tableName: string
       primaryKey: PrimaryKeyInput
     }
-  export type PutRowParams = WithTransactionId & {
+  type PutRowParams = WithTransactionId & {
     tableName: string
     primaryKey: PrimaryKeyInput
     condition: Condition
     attributeColumns: AttributesInput
     returnContent?: ReturnContent
   }
-  export type UpdateRowParams = WithTransactionId & {
+  type UpdateRowParams = WithTransactionId & {
     tableName: string
     primaryKey: PrimaryKeyInput
     condition: Condition
@@ -247,12 +246,12 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     }>
     returnContent?: ReturnContent
   }
-  export type DeleteRowParams = WithTransactionId & {
+  type DeleteRowParams = WithTransactionId & {
     tableName: string
     primaryKey: PrimaryKeyInput
     condition: Condition
   }
-  export type GetRangeParams = FilterParams &
+  type GetRangeParams = FilterParams &
     WithTransactionId & {
       tableName: string
       direction: EnumValues<typeof Direction>
@@ -260,10 +259,10 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
       exclusiveEndPrimaryKey: PrimaryKeyInput
       limit?: number
     }
-  export type BatchGetRowParams = WithTransactionId & {
+  type BatchGetRowParams = WithTransactionId & {
     tables: RowParamsInBatchGet[]
   }
-  export type BatchWriteRowParams = WithTransactionId & {
+  type BatchWriteRowParams = WithTransactionId & {
     tables: Array<{
       tableName: string
       rows: Array<
@@ -294,11 +293,11 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     }>
   }
 
-  export type ListSearchIndexParams = JustTableName
-  export type DescribeSearchIndexParams = JustTableName & {
+  type ListSearchIndexParams = JustTableName
+  type DescribeSearchIndexParams = JustTableName & {
     indexName: string
   }
-  export interface CreateSearchIndexParams {
+  interface CreateSearchIndexParams {
     tableName: string
     indexName: string
     schema: {
@@ -312,9 +311,9 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
       }
     }
   }
-  export type DeleteSearchIndexParams = DescribeSearchIndexParams
+  type DeleteSearchIndexParams = DescribeSearchIndexParams
 
-  export interface SearchParams {
+  interface SearchParams {
     tableName: string
     indexName: string
     searchQuery: {
@@ -334,7 +333,7 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     timeoutMs?: number
   }
 
-  export interface CreateIndexParams {
+  interface CreateIndexParams {
     mainTableName: string
     indexMeta: {
       name: string
@@ -346,28 +345,28 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     }
   }
 
-  export interface DropIndexParams {
+  interface DropIndexParams {
     mainTableName: string
     indexName: string
   }
 
-  export interface StartLocalTransactionParams {
+  interface StartLocalTransactionParams {
     tableName: string
     primaryKey: PrimaryKeyInput
   }
 
-  export interface CommitLocalTransactionParams {
+  interface CommitLocalTransactionParams {
     transactionId: string
   }
 
-  export type AbortLocalTransactionParams = CommitLocalTransactionParams
+  type AbortLocalTransactionParams = CommitLocalTransactionParams
 
   // ---------- protocol: results ----------
-  export interface ListTableResult {
+  interface ListTableResult {
     tableNames: string[]
   }
 
-  export interface DescribeTableResult {
+  interface DescribeTableResult {
     tableMeta: TableMeta
     reservedThroughputDetails: ReservedThroughput
     tableOptions: TableOptions
@@ -375,18 +374,18 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     shard_splits: any
   }
 
-  export interface Consumed {
+  interface Consumed {
     capacityUnit: {
       read: number
       write: number
     }
   }
-  export interface SingleRowResult {
+  interface SingleRowResult {
     consumed: Consumed
     row?: Row
     RequestId: string
   }
-  export interface GetRangeResult {
+  interface GetRangeResult {
     consumed: Consumed
     rows: Row[]
     nextStartPrimaryKey?: PrimaryKeyOutput
@@ -395,19 +394,19 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     nextToken?: Buffer
     RequestId: string
   }
-  export interface BatchGetRowResult {
+  interface BatchGetRowResult {
     tables: RowInBatch[][]
     RequestId: string
   }
-  export interface BatchWriteRowResult {
+  interface BatchWriteRowResult {
     tables: RowInBatch[]
     RequestId: string
   }
-  export interface StartLocalTransactionResult {
+  interface StartLocalTransactionResult {
     transactionId: string
   }
 
-  export interface SearchResult {
+  interface SearchResult {
     totalCounts: string
     isAllSucceeded: boolean
     nextToken: Buffer
@@ -455,18 +454,18 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
   }
 
   // ---------- filter ----------
-  export const LogicalOperator: {
+  const LogicalOperator: {
     NOT: 1
     AND: 2
     OR: 3
   }
 
-  export const ColumnConditionType: {
+  const ColumnConditionType: {
     COMPOSITE_COLUMN_CONDITION: 0
     SINGLE_COLUMN_CONDITION: 1
   }
 
-  export const ComparatorType: {
+  const ComparatorType: {
     EQUAL: 1
     NOT_EQUAL: 2
     GREATER_THAN: 3
@@ -475,19 +474,19 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     LESS_EQUAL: 6
   }
 
-  export const RowExistenceExpectation: {
+  const RowExistenceExpectation: {
     IGNORE: 0
     EXPECT_EXIST: 1
     EXPECT_NOT_EXIST: 2
   }
 
-  export class ColumnCondition {}
-  export class CompositeCondition extends ColumnCondition {
+  class ColumnCondition {}
+  class CompositeCondition extends ColumnCondition {
     constructor(combinator: EnumValues<typeof LogicalOperator>)
     addSubCondition: (condition: ColumnCondition) => void
     sub_conditions: ColumnCondition[]
   }
-  export class SingleColumnCondition extends ColumnCondition {
+  class SingleColumnCondition extends ColumnCondition {
     constructor(
       columnName: string,
       columnValue: CellValue,
@@ -501,20 +500,20 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     passIfMissing?: boolean
     latestVersionOnly?: boolean
   }
-  export class Condition {
+  class Condition {
     constructor(
       rowExistenceExpectation: EnumValues<typeof RowExistenceExpectation>,
       columnCondition: ColumnCondition | null
     )
     columnCondition: ColumnCondition
   }
-  export class ColumnPaginationFilter {
+  class ColumnPaginationFilter {
     constructor(limit: number, offset: number)
     getType(): number
   }
 
   // ---------- config ----------
-  export type ConfigOptions = Partial<{
+  type ConfigOptions = Partial<{
     accessKeyId: string
     secretAccessKey: string
     accessKeySecret: string
@@ -532,7 +531,7 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
   }>
 
   // ---------- events ----------
-  export class SequentialExecutor {
+  class SequentialExecutor {
     constructor()
     on(eventName: string, listener: () => void): SequentialExecutor
     onAsync(eventName: string, listener: () => void): SequentialExecutor
@@ -540,10 +539,10 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     removeAllListeners(eventName: string): SequentialExecutor
   }
 
-  export const events: SequentialExecutor
+  const events: SequentialExecutor
 
   // ---------- client ----------
-  export class Client {
+  class Client {
     constructor(config: ConfigOptions)
     createTable(
       params: CreateTableParams,
@@ -636,7 +635,7 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
   }
 
   // ---------- search ----------
-  export const QueryType: {
+  const QueryType: {
     MATCH_QUERY: 1
     MATCH_PHRASE_QUERY: 2
     TERM_QUERY: 3
@@ -655,7 +654,7 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     EXISTS_QUERY: 16
   }
 
-  export const ScoreMode: {
+  const ScoreMode: {
     SCORE_MODE_NONE: 1
     SCORE_MODE_AVG: 2
     SCORE_MODE_MAX: 3
@@ -663,18 +662,18 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     SCORE_MODE_MIN: 5
   }
 
-  export const SortOrder: {
+  const SortOrder: {
     SORT_ORDER_ASC: 0
     SORT_ORDER_DESC: 1
   }
 
-  export const SortMode: {
+  const SortMode: {
     SORT_MODE_MIN: 0
     SORT_MODE_MAX: 1
     SORT_MODE_AVG: 2
   }
 
-  export const FieldType: {
+  const FieldType: {
     LONG: 1
     DOUBLE: 2
     BOOLEAN: 3
@@ -685,26 +684,28 @@ declare module 'aliyun-tablestore-nodejs-sdk' {
     DATE: 8
   }
 
-  export const ColumnReturnType: {
+  const ColumnReturnType: {
     RETURN_ALL: 1
     RETURN_SPECIFIED: 2
     RETURN_NONE: 3
   }
 
-  export const GeoDistanceType: {
+  const GeoDistanceType: {
     GEO_DISTANCE_ARC: 0
     GEO_DISTANCE_PLANE: 1
   }
 
-  export const IndexOptions: {
+  const IndexOptions: {
     DOCS: 1
     FREQS: 2
     POSITIONS: 3
     OFFSETS: 4
   }
 
-  export const QueryOperator: {
+  const QueryOperator: {
     OR: 1
     AND: 2
   }
 }
+
+export = TableStore;
