@@ -222,6 +222,26 @@ message UpdateTableResponse {
 }
 /* ######################################################################################################### */
 
+/* #############################################  AddDefinedColumn  ############################################# */
+message AddDefinedColumnRequest {
+    required string table_name = 1;
+    repeated DefinedColumnSchema columns = 2;
+}
+
+message AddDefinedColumnResponse {
+}
+/* ######################################################################################################### */
+
+/* #############################################  DeleteDefinedColumn  ############################################# */
+message DeleteDefinedColumnRequest {
+    required string table_name = 1;
+    repeated string columns = 2;
+}
+
+message DeleteDefinedColumnResponse {
+}
+/* ######################################################################################################### */
+
 /* #############################################  DescribeTable  ############################################# */
 message DescribeTableRequest {
     required string table_name = 1;

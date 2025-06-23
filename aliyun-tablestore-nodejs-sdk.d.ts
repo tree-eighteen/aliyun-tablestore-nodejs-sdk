@@ -222,6 +222,19 @@ declare namespace TableStore {
 
   type DeleteTableParams = JustTableName
 
+  interface AddDefinedColumnParams {
+    tableName: string
+    columns: Array<{
+      name: string
+      type: EnumValues<typeof DefinedColumnType>
+    }>
+  }
+
+  interface DeleteDefinedColumnParams {
+    tableName: string
+    columns: string[]
+  }
+
   type GetRowParams = FilterParams &
     WithTransactionId & {
       tableName: string
@@ -562,6 +575,14 @@ declare namespace TableStore {
     ): Promise<DescribeTableResult>
     deleteTable(
       params: DeleteTableParams,
+      callback?: (error: Error | null, data: unknown) => void
+    ): Promise<unknown>
+    addDefinedColumn(
+      params: AddDefinedColumnParams,
+      callback?: (error: Error | null, data: unknown) => void
+    ): Promise<unknown>
+    deleteDefinedColumn(
+      params: DeleteDefinedColumnParams,
       callback?: (error: Error | null, data: unknown) => void
     ): Promise<unknown>
     getRow(
